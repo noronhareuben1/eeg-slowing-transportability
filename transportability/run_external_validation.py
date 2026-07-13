@@ -12,6 +12,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
     average_precision_score,
     brier_score_loss,
+    log_loss,
     roc_auc_score,
     roc_curve,
 )
@@ -25,6 +26,11 @@ FEATURES = (
 )
 
 
+def _logit(probabilities: np.ndarray) -> np.ndarray:
+    clipped = np.clip(probabilities, 1e-6, 1 - 1e-6)
+    return np.log(clipped / (1 - clipped))
+
+
 def _bootstrap(y: np.ndarray, p: np.ndarray, metric, seed: int = 19) -> list[float]:
     rng = np.random.default_rng(seed)
     values = []
@@ -34,6 +40,38 @@ def _bootstrap(y: np.ndarray, p: np.ndarray, metric, seed: int = 19) -> list[flo
             continue
         values.append(float(metric(y[idx], p[idx])))
     return [float(np.quantile(values, 0.025)), float(np.quantile(values, 0.975))]
+
+
+def _calibration(y: np.ndarray, p: np.ndarray) -> dict[str, float]:
+    logits = _logit(p).reshape(-1, 1)
+    model = LogisticRegression(max_iter=2000, C=np.inf)
+    model.fit(logits, y)
+    return {
+        "calibration_intercept": float(model.intercept_[0]),
+        "calibration_slope": float(model.coef_[0, 0]),
+        "log_loss": float(log_loss(y, p)),
+    }
+
+
+def _decode_sex(values: pd.Series) -> pd.Series:
+    text = values.astype(str).str.upper().str.strip()
+    mapped = text.str[0].map({"M": 1.0, "F": 0.0})
+    numeric = pd.to_numeric(text, errors="coerce")
+    return mapped.fillna(numeric.map({77.0: 1.0, 70.0: 0.0}))
+
+
+def _age_sex_matrix(frame: pd.DataFrame) -> tuple[np.ndarray, np.ndarray] | None:
+    age_col = "age" if "age" in frame.columns else "Age" if "Age" in frame.columns else None
+    sex_col = "sex" if "sex" in frame.columns else "gender" if "gender" in frame.columns else "Gender" if "Gender" in frame.columns else None
+    if age_col is None or sex_col is None:
+        return None
+    age = pd.to_numeric(frame[age_col], errors="coerce")
+    sex = _decode_sex(frame[sex_col])
+    complete = ~(age.isna() | sex.isna())
+    if not complete.any():
+        return None
+    matrix = np.column_stack([age[complete].to_numpy(float), sex[complete].to_numpy(float)])
+    return matrix, complete.to_numpy(bool)
 
 
 def evaluate(derivation: pd.DataFrame, external: pd.DataFrame) -> dict[str, object]:
@@ -67,6 +105,35 @@ def evaluate(derivation: pd.DataFrame, external: pd.DataFrame) -> dict[str, obje
         "external_specificity_at_derivation_threshold": float((~predictions & (y_test == 0)).sum() / max((y_test == 0).sum(), 1)),
         "derivation_selected_threshold": threshold,
     }
+    result.update(_calibration(y_test, probabilities))
+    x_train_reference = _age_sex_matrix(derivation)
+    x_test_reference = _age_sex_matrix(external)
+    if x_train_reference is not None and x_test_reference is not None:
+        x_train_reference_matrix, train_reference_mask = x_train_reference
+        x_test_reference_matrix, test_reference_mask = x_test_reference
+        y_train_reference = y_train[train_reference_mask]
+        y_test_reference = y_test[test_reference_mask]
+        reference = make_pipeline(
+            StandardScaler(),
+            LogisticRegression(max_iter=2000, class_weight="balanced", random_state=19),
+        )
+        reference.fit(x_train_reference_matrix, y_train_reference)
+        reference_probabilities = reference.predict_proba(x_test_reference_matrix)[:, 1]
+        result.update(
+            {
+                "age_sex_reference_n_derivation": int(len(y_train_reference)),
+                "age_sex_reference_n_external": int(len(y_test_reference)),
+                "age_sex_reference_external_auc": float(
+                    roc_auc_score(y_test_reference, reference_probabilities)
+                ),
+                "age_sex_reference_external_auc_ci95": _bootstrap(
+                    y_test_reference, reference_probabilities, roc_auc_score, seed=23
+                ),
+                "age_sex_reference_brier": float(
+                    brier_score_loss(y_test_reference, reference_probabilities)
+                ),
+            }
+        )
     return result
 
 

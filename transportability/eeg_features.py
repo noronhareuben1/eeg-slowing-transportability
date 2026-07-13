@@ -8,6 +8,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 from scipy.io import loadmat, whosmat
+from scipy.io.matlab import MatReadError
 from scipy.signal import welch
 
 CHANNELS = (
@@ -59,11 +60,103 @@ def load_recordings(path: str | pathlib.Path) -> np.ndarray:
     return array
 
 
+def _hdf5_group_name(path: pathlib.Path) -> str | None:
+    stem = path.stem.lower()
+    if stem.startswith("alz"):
+        return "alz_r"
+    if stem.startswith("controls"):
+        return "controls_r"
+    return None
+
+
+def _resolve_hdf5_recording(handle: Any, ref: Any) -> Any | None:
+    if not ref:
+        return None
+    obj = handle[ref]
+    shape = getattr(obj, "shape", None)
+    dtype = getattr(obj, "dtype", None)
+    if shape is not None and dtype is not None and dtype.kind != "O":
+        if len(shape) == 2 and 19 in shape and max(shape) > 1000:
+            return obj
+        return None
+    array = np.asarray(obj)
+    if array.dtype == object:
+        for child in array.flat:
+            dataset = _resolve_hdf5_recording(handle, child)
+            if dataset is not None:
+                return dataset
+    return None
+
+
+def _decode_hdf5_value(handle: Any, ref: Any) -> object:
+    if not ref:
+        return np.nan
+    obj = handle[ref]
+    array = np.asarray(obj)
+    if array.dtype == object:
+        for child in array.flat:
+            value = _decode_hdf5_value(handle, child)
+            if value != "" and not (isinstance(value, float) and np.isnan(value)):
+                return value
+        return np.nan
+    if array.dtype.kind in "ui" and array.size > 1:
+        return "".join(chr(int(value)) for value in array.flat if int(value) != 0).strip()
+    if array.size == 1:
+        value = array.item()
+        if isinstance(value, np.integer):
+            code = int(value)
+            if 32 <= code <= 126:
+                return chr(code)
+            return code
+        return float(value) if isinstance(value, np.floating) else value
+    if array.dtype.kind in "fiu" and array.size:
+        return float(array.flat[0])
+    return np.nan
+
+
+def _slice_hdf5_recording(dataset: Any, sfreq: float) -> np.ndarray:
+    n_samples = min(max(dataset.shape), int(120 * sfreq))
+    if dataset.shape[1] == 19:
+        return np.asarray(dataset[:n_samples, :], dtype=np.float64).T
+    return np.asarray(dataset[:, :n_samples], dtype=np.float64)
+
+
+def extract_hdf5_group(path: str | pathlib.Path, diagnosis: str) -> pd.DataFrame:
+    """Extract features from P-ADIC MATLAB v7.3/HDF5 structs."""
+    import h5py
+
+    path = pathlib.Path(path)
+    group_name = _hdf5_group_name(path)
+    if group_name is None:
+        raise ValueError(f"cannot infer P-ADIC group name from {path.name}")
+    rows = []
+    with h5py.File(path, "r") as handle:
+        group = handle[group_name]
+        recording_refs = np.asarray(group["G"])
+        for index in np.ndindex(recording_refs.shape):
+            dataset = _resolve_hdf5_recording(handle, recording_refs[index])
+            if dataset is None:
+                continue
+            sfreq = _decode_hdf5_value(handle, np.asarray(group["g"])[index])
+            sfreq = float(sfreq) if np.isfinite(sfreq) else 500.0
+            recording = _slice_hdf5_recording(dataset, sfreq=sfreq)
+            row = {
+                "recording_index": f"{index[0]}_{index[1]}",
+                "diagnosis": diagnosis,
+                "age": _decode_hdf5_value(handle, np.asarray(group["age"])[index]),
+                "sex": _decode_hdf5_value(handle, np.asarray(group["sex"])[index]),
+                "sfreq": sfreq,
+            }
+            row.update(_subject_features(recording, sfreq=sfreq))
+            rows.append(row)
+    return pd.DataFrame(rows)
+
+
 def _band_power(freqs: np.ndarray, power: np.ndarray, low: float, high: float) -> float:
     mask = (freqs >= low) & (freqs < high)
     if not np.any(mask):
         return float("nan")
-    return float(np.trapz(power[mask], freqs[mask]))
+    return float(np.trapezoid(power[mask], freqs[mask]))
 
 
 def _subject_features(recording: np.ndarray, sfreq: float) -> dict[str, float]:
@@ -93,6 +186,11 @@ def _subject_features(recording: np.ndarray, sfreq: float) -> dict[str, float]:
 
 
 def extract_group(path: str | pathlib.Path, diagnosis: str, sfreq: float = 500.0) -> pd.DataFrame:
+    path = pathlib.Path(path)
+    try:
+        return extract_hdf5_group(path, diagnosis)
+    except (ImportError, OSError, MatReadError, NotImplementedError, ValueError):
+        pass
     recordings = load_recordings(path)
     rows = []
     for index, recording in enumerate(recordings):

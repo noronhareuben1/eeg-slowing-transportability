@@ -1,0 +1,25 @@
+{
+  "n_derivation": 65,
+  "n_external": 145,
+  "external_auc": 0.7015306122448979,
+  "external_auc_ci95": [
+    0.6111786383101445,
+    0.7882706207482992
+  ],
+  "external_average_precision": 0.4800008307594732,
+  "external_brier": 0.3454906235512861,
+  "external_sensitivity_at_derivation_threshold": 0.7959183673469388,
+  "external_specificity_at_derivation_threshold": 0.4895833333333333,
+  "derivation_selected_threshold": 0.668990740042652,
+  "calibration_intercept": -1.1823502733840008,
+  "calibration_slope": 0.38288180587584336,
+  "log_loss": 1.0516439817870287,
+  "age_sex_reference_n_derivation": 65,
+  "age_sex_reference_n_external": 142,
+  "age_sex_reference_external_auc": 0.24547101449275366,
+  "age_sex_reference_external_auc_ci95": [
+    0.17190837147215868,
+    0.32859480033919203
+  ],
+  "age_sex_reference_brier": 0.39015956415718195
+}

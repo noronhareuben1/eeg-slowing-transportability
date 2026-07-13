@@ -13,6 +13,7 @@ authors = [{name = "Reuben Noronha"}]
 dependencies = [
   "antropy>=0.1.9",
   "eeglabio>=0.1.0",
+  "h5py>=3.16",
   "joblib>=1.4",
   "matplotlib>=3.9",
   "mne>=1.9",
