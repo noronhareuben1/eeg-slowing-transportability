@@ -1,0 +1,107 @@
+study:
+  seed: 20260710
+  labels:
+    A: AD
+    F: FTD
+    C: CN
+  channels:
+    canonical:
+      - Fp1
+      - Fp2
+      - F7
+      - F3
+      - Fz
+      - F4
+      - F8
+      - T3
+      - C3
+      - Cz
+      - C4
+      - T4
+      - T5
+      - P3
+      - Pz
+      - P4
+      - T6
+      - O1
+      - O2
+    rostral: [Fp1, Fp2, F7, F3, Fz, F4, F8]
+    caudal: [T5, P3, Pz, P4, T6, O1, O2]
+  asymmetry_definition: "mean(rostral) - mean(caudal)"
+
+datasets:
+  ds004504:
+    snapshot: "1.0.9"
+    task: eyesclosed
+    condition: eyes_closed
+    derivative_pipeline: null
+    s3_prefix: "https://s3.amazonaws.com/openneuro.org/ds004504"
+    metadata_repo: "https://github.com/OpenNeuroDatasets/ds004504.git"
+  ds006036:
+    snapshot: "1.0.6"
+    task: photomark
+    condition: photic_stimulation
+    derivative_pipeline: eeglab
+    s3_prefix: "https://s3.amazonaws.com/openneuro.org/ds006036"
+    metadata_repo: "https://github.com/OpenNeuroDatasets/ds006036.git"
+
+preprocessing:
+  use_openneuro_derivatives: true
+  l_freq: 1.0
+  h_freq: 45.0
+  resample_hz: 250
+  rereference: average
+  line_frequency_hz: 50
+  reject_peak_to_peak_uv: 150
+  flat_peak_to_peak_uv: 0.5
+  reproduction_epoch_seconds: 15
+  dfa_seconds: 300
+  model_epoch_seconds: 4
+  model_epoch_overlap: 0.5
+
+complexity:
+  hfd_kmax_primary: 32
+  hfd_kmax_sensitivity: [8, 16, 32, 64, 126]
+  permutation_entropy_order: 3
+  permutation_entropy_delay: 1
+  sample_entropy_order: 2
+  lzc_median_binarize: true
+  surrogate_method: iaaft
+  n_surrogates_primary: 20
+  n_surrogates_final: 100
+  iaaft_max_iterations: 1000
+  iaaft_tolerance: 0.000001
+
+spectra:
+  fmin: 1.0
+  fmax: 45.0
+  welch_seconds: 4.0
+  welch_overlap: 0.5
+  aperiodic_mode: fixed
+  peak_width_limits: [1.0, 12.0]
+  max_n_peaks: 6
+  min_peak_height: 0.1
+
+statistics:
+  alpha: 0.05
+  primary_contrast: AD_vs_FTD
+  covariates: [Age, Gender, MMSE]
+  bootstrap_iterations: 5000
+  permutation_iterations: 5000
+  multiplicity: holm
+
+classification:
+  outer_folds: 5
+  outer_repeats: 10
+  inner_folds: 4
+  primary_metric: macro_roc_auc_ovr
+  calibration: temperature
+  aggregation: mean_log_probability
+  early_stopping_patience: 5
+  max_epochs: 20
+  epochs_per_subject: 6
+  fusion_head_max_epochs: 100
+  fusion_head_patience: 10
+  batch_size: 64
+  learning_rate: 0.001
+  weight_decay: 0.0001

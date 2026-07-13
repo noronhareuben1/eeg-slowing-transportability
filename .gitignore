@@ -1,0 +1,33 @@
+# Raw datasets and derived local caches
+data/
+.data/
+*.set
+*.fdt
+*.edf
+*.bdf
+
+# Local Python environments and caches
+.venv/
+.venv*/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Render and QA intermediates
+manuscript/rendered/
+manuscript/qa/
+
+# Large local checkpoint/archive artifacts
+rostrocaudal-dementia-project.zip
+rostrocaudal-dementia-reproducibility-*.zip
+
+# OS/editor files
+.DS_Store
+.idea/
+.vscode/
+

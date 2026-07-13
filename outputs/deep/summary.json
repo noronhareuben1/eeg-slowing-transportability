@@ -1,0 +1,33 @@
+{
+  "bootstrap": {
+    "fusion_macro_auc_ci95_high": 0.7487494548122867,
+    "fusion_macro_auc_ci95_low": 0.5858231354634502,
+    "fusion_minus_raw_ci95_high": 0.0911258968788095,
+    "fusion_minus_raw_ci95_low": -0.02526761239563468,
+    "fusion_minus_raw_observed": 0.031602406460104815,
+    "fusion_minus_raw_paired_permutation_p": 0.41271745650869823,
+    "raw_macro_auc_ci95_high": 0.7111925413144506,
+    "raw_macro_auc_ci95_low": 0.5602690313361355
+  },
+  "cuda_available": false,
+  "device": "cpu",
+  "h5_success": false,
+  "models": {
+    "eegnet": {
+      "accuracy": 0.5340909090909091,
+      "balanced_accuracy": 0.4948220334277305,
+      "log_loss": 1.0437432541281282,
+      "macro_f1": 0.45970633843768177,
+      "macro_roc_auc_ovr": 0.6376393307764486
+    },
+    "eegnet_complexity_fusion": {
+      "accuracy": 0.6022727272727273,
+      "balanced_accuracy": 0.5660780720750735,
+      "log_loss": 0.9669414137364231,
+      "macro_f1": 0.549049049049049,
+      "macro_roc_auc_ovr": 0.6692417372365534
+    }
+  },
+  "outer_repeats_completed": 10,
+  "torch_version": "2.13.0+cu130"
+}

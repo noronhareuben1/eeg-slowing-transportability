@@ -1,0 +1,25 @@
+{
+  "config_sha256": "dff2a469fc01ef82433e83bdcf5c76d584399826fc6f49c6fc5e21223bb52e25",
+  "created_utc": "2026-07-13T01:03:14.179757+00:00",
+  "extra": {
+    "checkpoints": 50,
+    "cuda_available": false,
+    "device": "cpu",
+    "outer_repeats": 10,
+    "source_set_files": 88
+  },
+  "git_revision": null,
+  "inputs": {
+    "/workspace/scratch/6f40460a54f2/data/cache/eegnet_epochs_4s_6.npy": "44619221204071457c9cd85e92f2f916ccefc0ffae6356c607479c278ce2a07f",
+    "/workspace/scratch/6f40460a54f2/outputs/mechanistic/regional_features.csv": "b5c65cfd4f82af7338f38bda6c71570b51b810c29e6af8c5afa780ac5acacc4c",
+    "/workspace/scratch/6f40460a54f2/outputs/prediction/frozen_subject_splits.csv": "98072841a9a038f62559e982cdce4b6c3cec30e6353c75726303dde2797f21bc"
+  },
+  "outputs": {
+    "/workspace/scratch/6f40460a54f2/outputs/deep/outer_predictions.csv": "289dfa73ec3ec8972ddeb63148d1d8f78cd86a553664e18f668719d98cac6f0b",
+    "/workspace/scratch/6f40460a54f2/outputs/deep/summary.json": "2f3a12da42ec30edd9462e6e45b1b5b9ecba99016c88a1c0f4bff71899fdbcdc",
+    "/workspace/scratch/6f40460a54f2/outputs/deep/training_summary.csv": "aa931ac7337e84185b2544c064acd6b7be8aa0d1dfa7b74821433a28c8e7d3a5"
+  },
+  "platform": "Linux-6.12.47-x86_64-with-glibc2.39",
+  "python": "3.12.13 (main, Mar  3 2026, 14:59:34) [Clang 21.1.4 ]",
+  "stage": "deep_prediction"
+}

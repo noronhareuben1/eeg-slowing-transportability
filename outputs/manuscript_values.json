@@ -1,0 +1,124 @@
+{
+  "hypotheses": [
+    {
+      "ci95_high": 0.03048401267846387,
+      "ci95_low": -0.010744869366814555,
+      "effect_size": 0.2673338371465225,
+      "estimate": 0.010105151889456142,
+      "hypothesis": "H1 direct reproduction",
+      "p_holm": 1.0,
+      "p_unadjusted": 0.34802040073597484,
+      "supported": false
+    },
+    {
+      "ci95_high": 0.019156201057412704,
+      "ci95_low": -0.009189072126564194,
+      "effect_size": null,
+      "estimate": 0.004983564465424256,
+      "hypothesis": "H2 spectral independence",
+      "p_holm": 1.0,
+      "p_unadjusted": 0.4907051538762295,
+      "supported": false
+    },
+    {
+      "ci95_high": 0.9671361323929583,
+      "ci95_low": -1.161083861865049,
+      "effect_size": -0.06429895095301652,
+      "estimate": -0.12233835426921522,
+      "hypothesis": "H3 nonlinear-excess HFD",
+      "p_holm": 1.0,
+      "p_unadjusted": 0.8244892240703993,
+      "supported": false
+    },
+    {
+      "ci95_high": 0.06585939730766474,
+      "ci95_low": -0.10720003543891443,
+      "effect_size": null,
+      "estimate": -0.020670319065624842,
+      "hypothesis": "H4 diagnosis \u00d7 region \u00d7 state",
+      "p_holm": 1.0,
+      "p_unadjusted": 0.6396426653670158,
+      "supported": false
+    },
+    {
+      "ci95_high": 0.0911258968788095,
+      "ci95_low": -0.02526761239563468,
+      "effect_size": null,
+      "estimate": 0.031602406460104815,
+      "hypothesis": "H5 complexity fusion > EEGNet",
+      "p_holm": 1.0,
+      "p_unadjusted": 0.41271745650869823,
+      "supported": false
+    }
+  ],
+  "models": [
+    {
+      "accuracy": 0.7954545454545454,
+      "balanced_accuracy": 0.7966988727858292,
+      "ci95_high": 0.9604776337792641,
+      "ci95_low": 0.8820039793137618,
+      "log_loss": 0.40189688402801765,
+      "macro_auc": 0.9241561377430942,
+      "macro_f1": 0.791764705882353,
+      "model": "Demographic"
+    },
+    {
+      "accuracy": 0.5681818181818182,
+      "balanced_accuracy": 0.5487672830251541,
+      "ci95_high": 0.767629001145704,
+      "ci95_low": 0.6013236846827202,
+      "log_loss": 0.9837675974643769,
+      "macro_auc": 0.6846243010973146,
+      "macro_f1": 0.54247491638796,
+      "model": "Complexity"
+    },
+    {
+      "accuracy": 0.4431818181818182,
+      "balanced_accuracy": 0.4215114664889777,
+      "ci95_high": 0.6871626483042702,
+      "ci95_low": 0.5449731433175198,
+      "log_loss": 1.013402508034779,
+      "macro_auc": 0.6164200005603457,
+      "macro_f1": 0.40856208468148764,
+      "model": "Spectral"
+    },
+    {
+      "accuracy": 0.5454545454545454,
+      "balanced_accuracy": 0.5205452829140985,
+      "ci95_high": 0.7288053401274518,
+      "ci95_low": 0.5734641400372175,
+      "log_loss": 0.9887391038382577,
+      "macro_auc": 0.6495490502611942,
+      "macro_f1": 0.5139169756207168,
+      "model": "Feature fusion"
+    },
+    {
+      "accuracy": 0.5340909090909091,
+      "balanced_accuracy": 0.4948220334277305,
+      "ci95_high": 0.7111925413144506,
+      "ci95_low": 0.5602690313361355,
+      "log_loss": 1.0437432541281282,
+      "macro_auc": 0.6376393307764486,
+      "macro_f1": 0.45970633843768177,
+      "model": "EEGNet"
+    },
+    {
+      "accuracy": 0.6022727272727273,
+      "balanced_accuracy": 0.5660780720750735,
+      "ci95_high": 0.7487494548122867,
+      "ci95_low": 0.5858231354634502,
+      "log_loss": 0.9669414137364231,
+      "macro_auc": 0.6692417372365534,
+      "macro_f1": 0.549049049049049,
+      "model": "EEGNet + complexity"
+    }
+  ],
+  "multiplicity": "Holm correction across H1-H5",
+  "primary_interpretation": "The reported rostrocaudal complexity pattern was not reproduced as a statistically robust AD-FTD effect, did not survive spectral or surrogate controls, was not materially modified by recording state, and did not add reliable predictive value to EEGNet under subject-level validation.",
+  "study_sample": {
+    "AD": 36,
+    "CN": 29,
+    "FTD": 23,
+    "total": 88
+  }
+}

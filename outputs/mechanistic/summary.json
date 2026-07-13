@@ -1,0 +1,77 @@
+{
+  "h2_spectral_independence": {
+    "with_mmse": {
+      "ad_vs_ftd_coefficient": 0.004983564465424256,
+      "adjusted_r_squared": 0.6815067049533199,
+      "ci95_high": 0.019156201057412704,
+      "ci95_low": -0.009189072126564194,
+      "condition_number": 7.1792755929850935,
+      "covariates": [
+        "male",
+        "Age",
+        "aperiodic_exponent_rostrocaudal",
+        "aperiodic_offset_rostrocaudal",
+        "delta_relative_rostrocaudal",
+        "theta_relative_rostrocaudal",
+        "alpha_relative_rostrocaudal",
+        "MMSE"
+      ],
+      "hc3_standard_error": 0.0072310699093352734,
+      "n": 59,
+      "p_unadjusted": 0.4907051538762295,
+      "t": 0.689187703605313
+    },
+    "without_mmse": {
+      "ad_vs_ftd_coefficient": 0.0019664261378154967,
+      "adjusted_r_squared": 0.6837307567793374,
+      "ci95_high": 0.016504600483866576,
+      "ci95_low": -0.012571748208235582,
+      "condition_number": 7.041154003408659,
+      "covariates": [
+        "male",
+        "Age",
+        "aperiodic_exponent_rostrocaudal",
+        "aperiodic_offset_rostrocaudal",
+        "delta_relative_rostrocaudal",
+        "theta_relative_rostrocaudal",
+        "alpha_relative_rostrocaudal"
+      ],
+      "hc3_standard_error": 0.007417572190472042,
+      "n": 59,
+      "p_unadjusted": 0.7909295454150163,
+      "t": 0.2651037411326302
+    }
+  },
+  "h3_nonlinear_excess_hfd": {
+    "age_sex_mmse_adjusted": {
+      "ad_vs_ftd_coefficient": -1.3060229372007972,
+      "adjusted_r_squared": 0.2382738796981939,
+      "ci95_high": -0.12120298209146396,
+      "ci95_low": -2.4908428923101305,
+      "condition_number": 4.230547438021866,
+      "covariates": [
+        "male",
+        "Age",
+        "MMSE"
+      ],
+      "hc3_standard_error": 0.6045110851296462,
+      "n": 59,
+      "p_unadjusted": 0.03073695947628239,
+      "t": -2.1604615189491545
+    },
+    "unadjusted": {
+      "bootstrap_ci95_high": 0.9671361323929583,
+      "bootstrap_ci95_low": -1.161083861865049,
+      "hedges_g": -0.06429895095301652,
+      "mean_ad": -0.07739515377977013,
+      "mean_difference_ad_minus_ftd": -0.12233835426921522,
+      "mean_ftd": 0.04494320048944509,
+      "n_ad": 36,
+      "n_ftd": 23,
+      "welch_p_unadjusted": 0.8244892240703993,
+      "welch_t": -0.22347750591617918
+    }
+  },
+  "n_participants": 88,
+  "n_surrogates_per_channel": 20
+}

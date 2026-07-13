@@ -1,0 +1,20 @@
+{
+  "config_sha256": "117517f2e7d82f265482d1b7060fde8aa987f17c5fe3e0b08ee3bf367c31b1dc",
+  "created_utc": "2026-07-13T00:22:36.982234+00:00",
+  "extra": {
+    "n_jobs": 1,
+    "n_participants": 88
+  },
+  "git_revision": null,
+  "inputs": {
+    "/workspace/scratch/6f40460a54f2/data/ds004504/participants.tsv": "bd17cf02ec9733c9029d4a6d977b2918309b3c667ff9ceb1b5dce6e3cebccbc1"
+  },
+  "outputs": {
+    "/workspace/scratch/6f40460a54f2/outputs/reproduction/channel_complexity.csv": "e138366837744b02155eacb72f7bc7674c804086856a248c2e292b6ed0466ca2",
+    "/workspace/scratch/6f40460a54f2/outputs/reproduction/regional_complexity.csv": "dd40258219a4fd02a4e3dafa6f0393c8aa8539505913e46d56c2f8dd12cd6b35",
+    "/workspace/scratch/6f40460a54f2/outputs/reproduction/summary.json": "017d0d72dcd604b71fc27901fd0c7d7fdb1436b97606eefe6907cc03a390e03d"
+  },
+  "platform": "Linux-6.12.47-x86_64-with-glibc2.39",
+  "python": "3.12.13 (main, Mar  3 2026, 14:59:34) [Clang 21.1.4 ]",
+  "stage": "reproduction"
+}

@@ -1,0 +1,183 @@
+{
+  "frequency_sensitivity": {
+    "converged": true,
+    "formula": "higuchi_fd ~ AD_vs_FTD * rostral * C(frequency_hz, Treatment(reference=5.0)) + Age_z + male + MMSE_z",
+    "frequencies_hz": [
+      5.0,
+      10.0,
+      15.0,
+      20.0
+    ],
+    "frequency_specific_three_way_terms_vs_5hz": {
+      "AD_vs_FTD:rostral:C(frequency_hz, Treatment(reference=5.0))[T.10.0]": {
+        "ci95_high": 0.05493666545825489,
+        "ci95_low": -0.0416385811527194,
+        "coefficient": 0.0066490421527677455,
+        "p_unadjusted": 0.7872522654677782,
+        "standard_error": 0.024636995213368082,
+        "z": 0.26988040120899004
+      },
+      "AD_vs_FTD:rostral:C(frequency_hz, Treatment(reference=5.0))[T.15.0]": {
+        "ci95_high": 0.043051579436272615,
+        "ci95_low": -0.05222949612206635,
+        "coefficient": -0.004588958342896868,
+        "p_unadjusted": 0.8502551730527063,
+        "standard_error": 0.02430684347005964,
+        "z": -0.18879285368951315
+      },
+      "AD_vs_FTD:rostral:C(frequency_hz, Treatment(reference=5.0))[T.20.0]": {
+        "ci95_high": 0.028864142297456992,
+        "ci95_low": -0.06737060923998864,
+        "coefficient": -0.019253233471265827,
+        "p_unadjusted": 0.43289840321448936,
+        "standard_error": 0.024550132629102647,
+        "z": -0.7842415257847659
+      }
+    },
+    "method": "random-intercept mixed model (lbfgs)",
+    "mixed_model_errors": [],
+    "n_observations": 430,
+    "n_participants": 58
+  },
+  "group_means": [
+    {
+      "count": 35,
+      "diagnosis": "AD",
+      "mean": 1.6464488873940764,
+      "region": "caudal",
+      "state": "eyes_closed",
+      "std": 0.10458086234496809
+    },
+    {
+      "count": 35,
+      "diagnosis": "AD",
+      "mean": 1.6932604513427538,
+      "region": "rostral",
+      "state": "eyes_closed",
+      "std": 0.11662491026342364
+    },
+    {
+      "count": 35,
+      "diagnosis": "AD",
+      "mean": 1.6969530573051879,
+      "region": "caudal",
+      "state": "photic_open",
+      "std": 0.0934535902727049
+    },
+    {
+      "count": 35,
+      "diagnosis": "AD",
+      "mean": 1.7212030926301412,
+      "region": "rostral",
+      "state": "photic_open",
+      "std": 0.08500859429927009
+    },
+    {
+      "count": 29,
+      "diagnosis": "CN",
+      "mean": 1.7850262071302894,
+      "region": "caudal",
+      "state": "eyes_closed",
+      "std": 0.040673057565670766
+    },
+    {
+      "count": 29,
+      "diagnosis": "CN",
+      "mean": 1.7825096494672428,
+      "region": "rostral",
+      "state": "eyes_closed",
+      "std": 0.05922999758450129
+    },
+    {
+      "count": 29,
+      "diagnosis": "CN",
+      "mean": 1.77993972889901,
+      "region": "caudal",
+      "state": "photic_open",
+      "std": 0.050205475311677246
+    },
+    {
+      "count": 29,
+      "diagnosis": "CN",
+      "mean": 1.7929098860107628,
+      "region": "rostral",
+      "state": "photic_open",
+      "std": 0.04268384491523471
+    },
+    {
+      "count": 23,
+      "diagnosis": "FTD",
+      "mean": 1.7306288436184387,
+      "region": "caudal",
+      "state": "eyes_closed",
+      "std": 0.09910321625402982
+    },
+    {
+      "count": 23,
+      "diagnosis": "FTD",
+      "mean": 1.7451988030833974,
+      "region": "rostral",
+      "state": "eyes_closed",
+      "std": 0.10240322016405193
+    },
+    {
+      "count": 23,
+      "diagnosis": "FTD",
+      "mean": 1.7454850704628224,
+      "region": "caudal",
+      "state": "photic_open",
+      "std": 0.09531592068104433
+    },
+    {
+      "count": 23,
+      "diagnosis": "FTD",
+      "mean": 1.7581638203696783,
+      "region": "rostral",
+      "state": "photic_open",
+      "std": 0.0905445280209902
+    }
+  ],
+  "h4_diagnosis_region_state": {
+    "age_sex_mmse_adjusted": {
+      "ci95_high": 0.06585939465949626,
+      "ci95_low": -0.10720003279074967,
+      "coefficient": -0.020670319065626705,
+      "converged": true,
+      "formula": "higuchi_fd ~ AD_vs_FTD * rostral * photic + Age_z + male + MMSE_z",
+      "method": "random-intercept mixed model (powell)",
+      "mixed_model_errors": [
+        "lbfgs: LinAlgError: Singular matrix"
+      ],
+      "n_observations": 232,
+      "n_participants": 58,
+      "p_unadjusted": 0.6396426551211052,
+      "random_intercept_variance": 0.0025992792121051693,
+      "standard_error": 0.04414862436639567,
+      "term": "AD_vs_FTD:rostral:photic",
+      "z": -0.4681984855084228
+    },
+    "unadjusted": {
+      "ci95_high": 0.06585939730766474,
+      "ci95_low": -0.10720003543891443,
+      "coefficient": -0.020670319065624842,
+      "converged": true,
+      "formula": "higuchi_fd ~ AD_vs_FTD * rostral * photic",
+      "method": "random-intercept mixed model (powell)",
+      "mixed_model_errors": [
+        "lbfgs: LinAlgError: Singular matrix"
+      ],
+      "n_observations": 232,
+      "n_participants": 58,
+      "p_unadjusted": 0.6396426653670158,
+      "random_intercept_variance": 0.002736781792456614,
+      "standard_error": 0.04414862571752591,
+      "term": "AD_vs_FTD:rostral:photic",
+      "z": -0.4681984711795737
+    }
+  },
+  "interval_seconds": 2.0,
+  "paired_participants_all_diagnoses": 87,
+  "participants_without_valid_photic_interval": [
+    "sub-011"
+  ]
+}
