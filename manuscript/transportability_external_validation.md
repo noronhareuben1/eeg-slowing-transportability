@@ -143,3 +143,19 @@ Key outputs:
 - `outputs/amendment_v1_1/figure_amendment_results.png`
 
 Raw P-ADIC files are intentionally not committed.
+
+## Exploratory paired perturbational amendment
+
+A subsequent exploratory analysis used paired resting and photic recordings
+from 87 AHEPA participants to test a frequency-resolved perturbational
+fingerprint. The selected two-stage model first separated dementia from CN and
+then separated AD from FTD. Under 10 x 5 repeated nested participant-level
+validation, macro ROC-AUC was 0.777 (95% CI 0.723 to 0.829), compared with 0.663
+(0.582 to 0.744) for a resting-feature comparator. The paired macro-AUC
+difference was +0.113 (0.035 to 0.191). FTD AUC improved from 0.451 to 0.611,
+but the FTD difference interval included zero (-0.012 to 0.330), and
+default-threshold FTD sensitivity remained low.
+
+This amendment improves internal discrimination but does not externally
+validate the paired model: P-ADIC lacks both FTD and the matched photic protocol.
+It identifies a panel to lock before a new independent multisite study.

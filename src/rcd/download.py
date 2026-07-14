@@ -22,6 +22,18 @@ class AnnexFile:
     sha256: str
 
 
+def _annex_pointer(path: Path) -> str | None:
+    if path.is_symlink():
+        return os.readlink(path)
+    if not path.is_file() or path.stat().st_size > 4096:
+        return None
+    try:
+        value = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        return None
+    return value if ANNEX_PATTERN.search(value) else None
+
+
 def _run(*args: str, cwd: Path | None = None) -> None:
     subprocess.run(args, cwd=cwd, check=True)
 
@@ -42,9 +54,10 @@ def annex_inventory(metadata_root: Path, derivatives_only: bool = True) -> list[
         is_derivative = relative.parts[0] == "derivatives"
         if derivatives_only != is_derivative:
             continue
-        if not path.is_symlink():
+        pointer = _annex_pointer(path)
+        if pointer is None:
             continue
-        match = ANNEX_PATTERN.search(os.readlink(path))
+        match = ANNEX_PATTERN.search(pointer)
         if match is None:
             raise ValueError(f"Could not parse git-annex key from {path}")
         inventory.append(
@@ -100,6 +113,8 @@ def copy_metadata(metadata_root: Path, dataset_root: Path) -> None:
     for source in metadata_root.rglob("*"):
         if source.is_dir() or source.is_symlink() or ".git" in source.parts:
             continue
+        if _annex_pointer(source) is not None:
+            continue
         relative = source.relative_to(metadata_root)
         target = dataset_root / relative
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -122,6 +137,8 @@ def download_dataset(
     downloaded: list[Path] = []
     for item in inventory:
         destination = dataset_root / item.relative_path
+        if _annex_pointer(destination) is not None:
+            destination.unlink()
         if destination.exists() and destination.stat().st_size == item.size:
             if sha256sum(destination) == item.sha256:
                 downloaded.append(destination)

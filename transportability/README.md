@@ -49,3 +49,21 @@ python -m transportability.run_amendment_analysis --project-root .
 
 The external cohort does not include FTD in the files used here, so the
 three-class analysis is not described as externally validated.
+
+## Paired resting-and-photic amendment
+
+The dated `amendment_v1_2.md` tests the proposed AD/FTD/CN improvement: a
+resting dementia-screening head followed by an AD-versus-FTD head informed by
+frequency-resolved 5, 10, 15, and 20 Hz photic responses. Generate the paired
+features and run the repeated nested participant-level analysis with:
+
+```bash
+python -m transportability.photic_response_features --project-root . --n-jobs 4
+python -m transportability.run_amendment_v1_2 --project-root . \
+  --outer-repeats 10 --bootstrap-iterations 5000 --n-jobs 4
+```
+
+The two-stage candidate achieved macro ROC-AUC 0.777 (95% CI 0.723-0.829),
+compared with 0.663 (0.582-0.744) for resting EEG alone. This is an exploratory
+internal result. It identifies a panel to lock before independent multisite
+validation; it is not a clinical or state-of-the-art claim.

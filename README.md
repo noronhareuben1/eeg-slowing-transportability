@@ -71,7 +71,9 @@ Validated outputs include:
 - `docs/submission_readiness.md`: required institutional and submission steps;
 - `outputs/manifests/`: stage inputs, outputs, versions, and hashes.
 
-The test suite contains 11 tests. Ruff and mypy checks pass. Raw EEG and local environments are intentionally excluded from the reproducibility archive.
+The test suite contains 20 tests, including one optional PyTorch test. Raw EEG
+and local environments are intentionally excluded from the reproducibility
+archive.
 
 ## Authorship and clinical scope
 
@@ -100,3 +102,18 @@ estimate from 0.578 to 0.657 macro AUC, but the corresponding external AD/CN
 extension was essentially unchanged at 0.705. Complexity additions did not
 improve on the spectral-only model, and FTD discrimination remained weak. See
 `transportability/amendment_v1_1.md` and `docs/amendment_v1_1_results.md`.
+
+## Paired perturbational amendment
+
+A second exploratory amendment combines resting topography with
+frequency-resolved 5/10/15/20 Hz photic responses and a two-stage
+dementia-versus-control then AD-versus-FTD classifier. In 87 paired participants,
+10 x 5 repeated nested validation produced macro ROC-AUC 0.777 (95% CI
+0.723-0.829), compared with 0.663 (0.582-0.744) for the resting comparator. The
+paired macro-AUC difference was +0.113 (0.035 to 0.191). FTD AUC improved from
+0.451 to 0.611, but the paired difference interval still included zero.
+
+This is a promising internally validated candidate, not a state-of-the-art or
+clinical claim. The highest recent report on the same benchmark is substantially
+higher, and independent paired AD/FTD/CN validation is still required. See
+`transportability/amendment_v1_2.md` and `docs/amendment_v1_2_results.md`.

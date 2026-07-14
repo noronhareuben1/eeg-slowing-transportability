@@ -1,0 +1,32 @@
+{
+  "common_frequencies_hz": [
+    5.0,
+    10.0,
+    15.0,
+    20.0
+  ],
+  "dataset": "OpenNeuro ds006036 snapshot 1.0.6",
+  "interval_seconds": 2.0,
+  "n_feature_rows": 6099,
+  "n_participants_complete_four_frequency": 73,
+  "n_participants_total": 88,
+  "n_participants_with_features": 87,
+  "participants_without_complete_four_frequency": [
+    "sub-003",
+    "sub-011",
+    "sub-015",
+    "sub-019",
+    "sub-020",
+    "sub-023",
+    "sub-029",
+    "sub-034",
+    "sub-057",
+    "sub-058",
+    "sub-060",
+    "sub-064",
+    "sub-065",
+    "sub-077",
+    "sub-078"
+  ],
+  "transient_seconds": 0.25
+}
