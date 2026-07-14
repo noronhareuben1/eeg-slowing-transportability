@@ -35,3 +35,17 @@ python -m transportability.download_padic --output data/p_adic/raw
 
 Raw EEG is intentionally excluded from git and from the reproducibility
 archive. The script records source DOI, file IDs, sizes, and SHA-256 checksums.
+
+## Exploratory compact-model amendment
+
+The dated `amendment_v1_1.md` retains the locked baseline and tests compact
+spectral-parameterization and rostrocaudal-complexity additions. It reports
+internal participant-level AD/FTD/CN validation and one-way external AD/CN
+validation in P-ADIC. Run it with:
+
+```bash
+python -m transportability.run_amendment_analysis --project-root .
+```
+
+The external cohort does not include FTD in the files used here, so the
+three-class analysis is not described as externally validated.

@@ -109,6 +109,26 @@ derivation threshold did not retain high specificity externally. The best
 interpretation is that a small slowing panel may carry transportable signal,
 but it requires larger multisite validation and explicit recalibration.
 
+## Exploratory compact-model amendment
+
+After the locked external result was known, a dated exploratory amendment
+tested compact spectral-parameterization and rostrocaudal-complexity additions.
+The analysis used repeated nested participant-level validation for AD, FTD, and
+CN in the 88-person AHEPA cohort. The locked three-feature model achieved macro
+ROC-AUC 0.578 (95% CI 0.500 to 0.648). The compact spectral model achieved the
+highest internal estimate, 0.657 (0.580 to 0.732), for a paired difference of
++0.079 (-0.001 to +0.161). FTD remained the weakest class (one-versus-rest AUC
+0.447). Complexity and combined extensions did not exceed the spectral-only
+model.
+
+The five-feature panel shared by AHEPA and P-ADIC achieved external AD/CN AUC
+0.705 (95% CI 0.619 to 0.786), essentially unchanged from the locked model. The
+paired difference was +0.003 (-0.028 to +0.036). Although its Brier score was
+lower (0.272 versus 0.345), specificity at the derivation threshold remained
+poor (0.406). These exploratory results support a future independently locked
+spectral panel, but they do not show improved external discrimination and do not
+establish an externally validated AD/FTD/CN classifier.
+
 ## Reproducibility
 
 Key outputs:
@@ -117,5 +137,9 @@ Key outputs:
 - `outputs/transportability/external_padic_features.csv`
 - `outputs/transportability/external_validation_results.json`
 - `docs/transportability_results.md`
+- `transportability/amendment_v1_1.md`
+- `outputs/amendment_v1_1/table_internal_models.csv`
+- `outputs/amendment_v1_1/table_external_models.csv`
+- `outputs/amendment_v1_1/figure_amendment_results.png`
 
 Raw P-ADIC files are intentionally not committed.

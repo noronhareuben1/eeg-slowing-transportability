@@ -77,7 +77,7 @@ The test suite contains 11 tests. Ruff and mypy checks pass. Raw EEG and local e
 
 This is research software, not a clinical diagnostic device. Final authorship requires direct intellectual contribution, verification of all results, responsibility for the submitted text, and disclosure of AI assistance according to the target journal’s policy.
 
-## New transportability track
+## Completed transportability track
 
 The new candidate paper is **A locked three-feature EEG slowing index for
 dementia screening: external validation across independent routine-EEG
@@ -92,3 +92,11 @@ The P-ADIC files are public through Dryad but are several gigabytes and are
 never committed to git. If the current execution environment cannot pass
 Dryad's signed redirect, the same downloader can be run on the user's local
 machine and the resulting manifest can be copied into `data/p_adic/raw/`.
+
+The locked model achieved external AD/CN ROC-AUC 0.702 (95% CI 0.611-0.788).
+A dated exploratory amendment then tested compact spectral and rostrocaudal
+complexity additions. The spectral model improved the internal AD/FTD/CN point
+estimate from 0.578 to 0.657 macro AUC, but the corresponding external AD/CN
+extension was essentially unchanged at 0.705. Complexity additions did not
+improve on the spectral-only model, and FTD discrimination remained weak. See
+`transportability/amendment_v1_1.md` and `docs/amendment_v1_1_results.md`.

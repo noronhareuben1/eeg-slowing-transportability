@@ -1,0 +1,60 @@
+{
+  "analysis_role": "exploratory external AD/CN amendment",
+  "feature_sets": {
+    "locked_baseline": [
+      "posterior_delta_alpha_ratio",
+      "posterior_alpha_relative",
+      "global_aperiodic_exponent"
+    ],
+    "shared_spectral_extension": [
+      "posterior_delta_alpha_ratio",
+      "posterior_alpha_relative",
+      "global_aperiodic_exponent",
+      "global_delta_relative",
+      "global_alpha_relative"
+    ]
+  },
+  "models": {
+    "locked_baseline": {
+      "average_precision": 0.4800008307594732,
+      "brier": 0.3454906235512861,
+      "calibration_intercept": -1.1823502629011104,
+      "calibration_slope": 0.38288179823041996,
+      "derivation_threshold": 0.668990740042652,
+      "log_loss": 1.0516439817870287,
+      "n_features": 3,
+      "roc_auc": 0.7015306122448979,
+      "roc_auc_ci95": [
+        0.6145673894557823,
+        0.7848692602040815
+      ],
+      "selected_C": 1.0,
+      "sensitivity_at_derivation_threshold": 0.7959183673469388,
+      "specificity_at_derivation_threshold": 0.4895833333333333
+    },
+    "shared_spectral_extension": {
+      "average_precision": 0.4770785984965116,
+      "brier": 0.27202986078210273,
+      "calibration_intercept": -1.4063363827719146,
+      "calibration_slope": 1.8302467647848508,
+      "derivation_threshold": 0.5499257013154474,
+      "log_loss": 0.7414244768444201,
+      "n_features": 5,
+      "roc_auc": 0.7047193877551021,
+      "roc_auc_ci95": [
+        0.6194727891156463,
+        0.7857249149659863
+      ],
+      "selected_C": 0.01,
+      "sensitivity_at_derivation_threshold": 0.8775510204081632,
+      "specificity_at_derivation_threshold": 0.40625
+    }
+  },
+  "n_derivation": 65,
+  "n_external": 145,
+  "paired_auc_difference_ci95": [
+    -0.027859268707483096,
+    0.03635204081632659
+  ],
+  "paired_auc_difference_extension_minus_baseline": 0.0031887755102042448
+}
