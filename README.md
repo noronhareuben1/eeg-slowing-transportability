@@ -1,51 +1,123 @@
-# Rostrocaudal EEG complexity in AD and FTD
+# EEG Slowing Transportability
 
-> **Current project direction:** a separate transportability study is now being
-> developed in `transportability/`. It will test a locked, compact EEG slowing
-> index on an independent routine-EEG cohort. The completed complexity audit
-> remains unchanged and is retained as a separate reproducibility manuscript.
+[![CI](https://github.com/noronhareuben1/eeg-slowing-transportability/actions/workflows/ci.yml/badge.svg)](https://github.com/noronhareuben1/eeg-slowing-transportability/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
+[![Python 3.11](https://img.shields.io/badge/python-3.11-3776AB.svg)](pyproject.toml)
 
-Reproducible analysis for the study:
+**Compact resting EEG, spectral parameterization, rostrocaudal complexity, and
+frequency-resolved photic responses for participant-level AD/FTD/CN analysis**
 
-> **Is rostrocaudal EEG complexity a state-invariant biomarker of dementia subtype? Spectral-surrogate decomposition and leakage-safe deep learning in paired Alzheimer’s disease, frontotemporal dementia, and control recordings**
+This repository tests a simple idea under increasingly difficult conditions:
+can small, interpretable EEG measurements transfer beyond one dataset and help
+distinguish Alzheimer disease (AD), frontotemporal dementia (FTD), and
+cognitively normal controls (CN)?
 
-The completed manuscript is titled **Testing rostrocaudal EEG complexity as a state-invariant marker of dementia subtype: spectral-surrogate decomposition and leakage-safe prediction in paired Alzheimer’s disease, frontotemporal dementia, and control recordings**.
+The project contains a locked external AD/CN validation, two dated exploratory
+amendments, and the original rostrocaudal-complexity validity audit. Results are
+kept separate so internal model development is never mislabeled as external or
+confirmatory evidence.
 
-## Scientific question
+## Results at a glance
 
-A 2025 *npj Aging* study reported opposite rostrocaudal fractal-dimension patterns in Alzheimer’s disease (AD) and frontotemporal dementia (FTD) using OpenNeuro dataset `ds004504`. This project asks whether that effect:
+| Analysis | Validation unit | Main result | Claim boundary |
+|---|---|---:|---|
+| Locked three-feature slowing index | External P-ADIC AD/CN, n = 145 | ROC-AUC 0.702, 95% CI 0.611-0.788 | Transported modest discrimination; calibration and specificity were poor |
+| Spectral amendment v1.1 | Internal AD/FTD/CN, n = 88 | Macro AUC 0.657 vs 0.578 baseline | Exploratory; external AD/CN AUC was essentially unchanged at 0.705 |
+| Paired photic amendment v1.2 | Repeated nested AD/FTD/CN, n = 87 | Macro AUC 0.777, 95% CI 0.723-0.829 | Promising internal candidate; no independent paired validation |
+| Paired v1.2 improvement | Same participants and folds | +0.113, paired 95% CI +0.035 to +0.191 | Supports the overall internal hypothesis only |
+| FTD ranking in paired v1.2 | Same participants and folds | AUC 0.611; improvement CI -0.012 to +0.330 | FTD-specific hypothesis unsupported; sensitivity was 13.0% |
+| Original complexity audit | Leakage-safe participant-level evaluation | Complexity fusion AUC 0.669; delta +0.032, p = 0.413 | Frozen hypotheses unsupported after multiplicity correction |
 
-1. reproduces under a fully open Python pipeline;
-2. survives adjustment for oscillatory power and the aperiodic spectrum;
-3. exceeds values expected from spectrum-preserving IAAFT surrogate signals;
-4. generalizes to a paired photic-stimulation recording (`ds006036`) without participant leakage; and
-5. adds subject-level predictive value beyond a compact EEGNet baseline.
+**Bottom line:** the locked slowing index transfers only modestly, compact
+spectral additions do not materially improve external AD/CN discrimination,
+and rostrocaudal complexity does not rescue the model. Frequency-resolved
+photic responses improve internal three-class ranking, especially the AD/FTD
+subtype head, but still require a newly locked independent cohort. This is not
+a clinical diagnostic system or a state-of-the-art accuracy claim.
 
-The primary goal is mechanistic validity, not maximization of epoch-level accuracy.
+![Paired resting and photic EEG results](outputs/amendment_v1_2/figure_paired_response_results.png)
 
-## Data
+## Research tracks
 
-- OpenNeuro `ds004504`: eyes-closed EEG, 36 AD / 23 FTD / 29 cognitively normal participants.
-- OpenNeuro `ds006036`: paired photic-stimulation EEG from the same 88 participants.
+### 1. Locked external transportability
 
-Both datasets are CC0. Large EEG files are downloaded locally and are never committed.
+The primary study fixes three features in OpenNeuro `ds004504` before one-way
+evaluation in P-ADIC:
 
-## Validation principles
+1. posterior relative delta-to-alpha ratio;
+2. posterior relative alpha power;
+3. global aperiodic exponent.
 
-- The participant is the statistical and predictive unit.
-- Every epoch from a participant stays in the same fold.
-- Preprocessing parameters learned from data, feature selection, normalization, calibration, and model tuning are fit using training participants only.
-- Cross-state tests use participants absent from training, despite the two datasets sharing the same cohort.
-- Confirmatory hypotheses and endpoints are fixed in `docs/preregistration.md` before outcome inspection.
-- Negative results are retained and reported.
+The external AUC was 0.702, but calibration slope was 0.383 and specificity at
+the derivation-selected threshold was 0.490. The result supports feasibility,
+not clinical deployment. Protocol: [transportability/protocol.md](transportability/protocol.md).
 
-## Quick start
+### 2. Compact spectral and complexity amendment
+
+Amendment v1.1 tests periodic and aperiodic spectral parameters, rostrocaudal
+gradients, and surrogate-controlled complexity. Spectral features improved the
+internal three-class point estimate. The matched external spectral extension
+changed AD/CN AUC by only +0.003, with a paired interval spanning zero.
+Complexity additions did not improve on the spectral-only panel.
+
+### 3. Paired resting and photic amendment
+
+Amendment v1.2 combines the resting trait with the response to 5, 10, 15, and
+20 Hz visual stimulation. A two-stage model first separates dementia from CN,
+then uses a dedicated AD-versus-FTD head. Every feature selection, imputation,
+scaling, and model choice occurs inside training participants in 10 x 5 repeated
+nested validation.
+
+The paired two-stage model reached macro AUC 0.777 versus 0.663 for resting EEG
+alone. Its default FTD sensitivity remained 13.0%, so the next test must freeze
+the feature panel and decision rule before an independent paired cohort is
+opened.
+
+### 4. Original complexity validity audit
+
+The retained `rcd` pipeline reproduces and stress-tests the reported
+rostrocaudal fractal-dimension effect using spectrum-preserving IAAFT
+surrogates, paired photic data, classical models, and EEGNet with participant
+grouping. All five frozen hypotheses were unsupported after Holm correction.
+
+## Public datasets
+
+- OpenNeuro `ds004504` v1.0.9: eyes-closed EEG, 36 AD, 23 FTD, and 29 CN,
+  DOI [`10.18112/openneuro.ds004504.v1.0.9`](https://doi.org/10.18112/openneuro.ds004504.v1.0.9),
+  CC0.
+- OpenNeuro `ds006036` v1.0.6: paired photic EEG from the same cohort,
+  DOI [`10.18112/openneuro.ds006036.v1.0.6`](https://doi.org/10.18112/openneuro.ds006036.v1.0.6),
+  CC0.
+- P-ADIC Dryad `10.5061/dryad.8gtht76pw`: independent routine EEG for
+  external AD/CN validation, CC0. The focused AD and control download is about
+  11 GB.
+
+Raw EEG is never committed. See [DATA_LICENSES.md](DATA_LICENSES.md).
+
+## Installation
+
+Python 3.11 is the supported environment.
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate
-python -m pip install -e ".[dev,ml]"
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e ".[dev]"
+```
 
+Install the optional PyTorch dependency only for the EEGNet stage:
+
+```bash
+python -m pip install -e ".[ml]"
+```
+
+## Reproduce the transportability analyses
+
+First produce the resting `ds004504` regional features with the retained core
+pipeline:
+
+```bash
 rcd download --dataset ds004504 --derivatives-only
 rcd download --dataset ds006036 --derivatives-only
 rcd validate-data
@@ -53,67 +125,81 @@ rcd run-reproduction
 rcd run-mechanistic --n-surrogates 20
 rcd run-state
 rcd run-classical
-rcd run-deep --repeats 10
 rcd make-report
 ```
 
-The deep stage uses CUDA automatically when it is exposed to PyTorch and otherwise runs on CPU. Run `rcd --help` for stage-specific options.
+Download and verify the locked P-ADIC files, then build the two compatible
+feature tables and run the untouched external test:
 
-## Completed result
+```bash
+eeg-download-padic --output data/p_adic/raw
+eeg-derive-locked \
+  --regional outputs/mechanistic/regional_features.csv \
+  --output outputs/transportability/derivation_features.csv
+eeg-extract-padic \
+  --input data/p_adic/raw \
+  --output outputs/transportability/external_padic_features.csv
+eeg-external-validate \
+  --derivation outputs/transportability/derivation_features.csv \
+  --external outputs/transportability/external_padic_features.csv \
+  --output outputs/transportability/external_validation_results.json
+```
 
-All five frozen hypotheses were unsupported after Holm correction. EEGNet achieved participant-level three-class macro AUC 0.638 (95% bootstrap CI 0.560–0.711); late complexity fusion achieved 0.669 (0.586–0.749), with a paired improvement of 0.032 (−0.025 to 0.091; permutation p=0.413). The defensible contribution is a reproducibility and validity audit, not a high-accuracy diagnostic claim.
+Run the dated amendments:
 
-Validated outputs include:
+```bash
+eeg-amend-v1-1 --project-root . --outer-repeats 10 --bootstrap-iterations 2000
+eeg-photic-features --project-root . --n-jobs 4
+eeg-amend-v1-2 \
+  --project-root . \
+  --outer-repeats 10 \
+  --bootstrap-iterations 5000 \
+  --n-jobs 4
+```
 
-- `outputs/manuscript_values.json`: machine-readable manuscript values;
-- `outputs/reporting/figure_main_results.png`: four-panel primary figure;
-- `manuscript/rostrocaudal_eeg_validity_audit.docx`: editable journal-style manuscript;
-- `docs/submission_readiness.md`: required institutional and submission steps;
-- `outputs/manifests/`: stage inputs, outputs, versions, and hashes.
+See [docs/reproducibility.md](docs/reproducibility.md) for expected values,
+stage outputs, and frozen-versus-exploratory boundaries.
 
-The test suite contains 20 tests, including one optional PyTorch test. Raw EEG
-and local environments are intentionally excluded from the reproducibility
-archive.
+## Software checks
 
-## Authorship and clinical scope
+The data-free suite includes 20 tests; the PyTorch test is skipped when the
+optional dependency is absent.
 
-This is research software, not a clinical diagnostic device. Final authorship requires direct intellectual contribution, verification of all results, responsibility for the submitted text, and disclosure of AI assistance according to the target journal’s policy.
+```bash
+ruff check src tests transportability
+pytest
+```
 
-## Completed transportability track
+## Repository map
 
-The new candidate paper is **A locked three-feature EEG slowing index for
-dementia screening: external validation across independent routine-EEG
-cohorts**. Its primary endpoint is AD-versus-control external validation. The
-analysis is deliberately small and interpretable: posterior delta/alpha
-slowing, posterior alpha activity, and the global aperiodic exponent, compared
-with an age/sex reference and EEGNet. The frozen protocol and checksum-aware
-P-ADIC downloader are in `transportability/protocol.md` and
-`transportability/download_padic.py`.
+| Path | Contents |
+|---|---|
+| `transportability/protocol.md` | Locked external AD/CN protocol |
+| `transportability/amendment_v1_1.md` | Dated compact spectral and complexity amendment |
+| `transportability/amendment_v1_2.md` | Dated paired perturbational amendment |
+| `transportability/` | Download, feature, external-validation, and amendment code |
+| `src/rcd/` | Original complexity, surrogate, prediction, and reporting pipeline |
+| `outputs/transportability/` | Locked external results and compatible feature tables |
+| `outputs/amendment_v1_1/` | Compact-model results and participant predictions |
+| `outputs/amendment_v1_2/` | Paired-model results, selection frequencies, and figure |
+| `manuscript/` | Complexity-audit manuscript and transportability validation draft |
 
-The P-ADIC files are public through Dryad but are several gigabytes and are
-never committed to git. If the current execution environment cannot pass
-Dryad's signed redirect, the same downloader can be run on the user's local
-machine and the resulting manifest can be copied into `data/p_adic/raw/`.
+## Interpretation limits
 
-The locked model achieved external AD/CN ROC-AUC 0.702 (95% CI 0.611-0.788).
-A dated exploratory amendment then tested compact spectral and rostrocaudal
-complexity additions. The spectral model improved the internal AD/FTD/CN point
-estimate from 0.578 to 0.657 macro AUC, but the corresponding external AD/CN
-extension was essentially unchanged at 0.705. Complexity additions did not
-improve on the spectral-only model, and FTD discrimination remained weak. See
-`transportability/amendment_v1_1.md` and `docs/amendment_v1_1_results.md`.
+- P-ADIC externally validates AD versus controls only; it does not contain the
+  FTD and matched photic data needed to validate the paired three-class model.
+- `ds004504` and `ds006036` contain the same people. Their pairing tests state
+  dependence but is not external validation.
+- The paired v1.2 model was developed after earlier outcomes were known.
+- The FTD operating point is poor despite improved rank discrimination.
+- Differences from higher-scoring papers may reflect validation unit, leakage
+  control, split repetition, feature selection, and cohort composition.
+- No result establishes diagnosis, prognosis, universal applicability, or
+  patient-level clinical utility.
 
-## Paired perturbational amendment
+## Citation and license
 
-A second exploratory amendment combines resting topography with
-frequency-resolved 5/10/15/20 Hz photic responses and a two-stage
-dementia-versus-control then AD-versus-FTD classifier. In 87 paired participants,
-10 x 5 repeated nested validation produced macro ROC-AUC 0.777 (95% CI
-0.723-0.829), compared with 0.663 (0.582-0.744) for the resting comparator. The
-paired macro-AUC difference was +0.113 (0.035 to 0.191). FTD AUC improved from
-0.451 to 0.611, but the paired difference interval still included zero.
-
-This is a promising internally validated candidate, not a state-of-the-art or
-clinical claim. The highest recent report on the same benchmark is substantially
-higher, and independent paired AD/FTD/CN validation is still required. See
-`transportability/amendment_v1_2.md` and `docs/amendment_v1_2_results.md`.
+Use [CITATION.cff](CITATION.cff) for the software release and cite every source
+dataset used. Source code is MIT licensed. Original project documentation and
+figures are released under CC BY 4.0. This is exploratory research software,
+not a medical device.

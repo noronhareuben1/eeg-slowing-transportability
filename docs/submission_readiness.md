@@ -1,26 +1,48 @@
-# Submission readiness
+# Self-publication readiness
 
 ## Scientific status
 
-The analysis is complete for all five frozen hypotheses. All 88 eyes-closed recordings and both released derivative manifests were checksum verified. One participant lacked a valid event-defined photic interval and was excluded only from the paired state analysis. All confirmatory p values were Holm adjusted; none was supported.
+The repository contains four clearly separated analyses:
 
-The defensible paper is a reproducibility and validity audit. It must not be reframed as a high-accuracy diagnostic model or as evidence of early/preclinical detection.
+1. a completed negative rostrocaudal-complexity validity audit;
+2. a locked one-way external AD/CN transportability test;
+3. a dated exploratory compact spectral and complexity amendment;
+4. a dated exploratory paired resting-and-photic AD/FTD/CN amendment.
 
-## Required before journal submission
+The external slowing index achieved modest discrimination but poor calibration.
+The paired photic candidate improved internal macro AUC, while its FTD operating
+point remained inadequate. No result is a clinical diagnostic claim.
 
-- Obtain a written University of Rochester determination for the secondary analysis (non-human-subjects research or exempt, as applicable).
-- Confirm that the University of Rochester affiliation may be used and determine whether the PI or other contributors meet authorship criteria.
-- Confirm funding, institutional support, acknowledgments, and competing interests.
-- Have the human author and at least one domain expert independently review the analysis code, frozen protocol, numerical claims, and manuscript.
-- Create a public version-controlled repository, exclude raw EEG and local environments, tag the exact release, and archive it with a DOI (for example through Zenodo).
-- Select the target journal and conform the manuscript, abstract, word count, reference style, figure dimensions, reporting checklist, cover letter, and generative-AI disclosure to its current instructions.
-- Consider adding an independent external dataset before targeting a high-impact clinical journal. The paired photic dataset contains the same people and is not external validation.
+## Public release checklist
 
-## Recommended journal sequence
+- Source datasets are identified by repository, version, DOI, and license.
+- Raw EEG and local environments are excluded from git.
+- Frozen and exploratory analyses are labeled separately.
+- Participant-level validation and leakage controls are documented.
+- Machine-readable results, predictions, figures, and manuscript drafts are
+  included.
+- Tests and lint run without participant data.
+- `CITATION.cff`, code license, data-license boundaries, and release notes are
+  included.
+- The release is tagged only after the public branch and CI checks agree.
 
-1. **NeuroImage: Clinical** — best fit if positioned as a biomarker-validity and reproducibility study; external validation would materially improve competitiveness.
-2. **Clinical Neurophysiology** — strong fit for the electrophysiology and surrogate-control emphasis, with rigorous clinical review expected.
-3. **Alzheimer’s Research & Therapy** — plausible if the open-science and differential-diagnosis implications are foregrounded.
-4. **Scientific Reports** or a dedicated reproducibility/methods venue — realistic for the complete negative result and leakage-safe benchmark.
+## Claim rules
 
-No journal acceptance can be guaranteed. PubMed indexes journals and articles; it is not itself a journal.
+- Do not describe internal paired analysis as external validation.
+- Do not claim state-of-the-art performance.
+- Do not use epoch counts as the inferential sample size.
+- Report calibration, class-specific behavior, and uncertainty alongside AUC.
+- Preserve negative and null results.
+- State that P-ADIC validates AD/CN only and cannot validate FTD or the paired
+  photic model.
+
+## Independent review
+
+Self-publication does not replace scientific review. Readers should be able to
+audit code, source manifests, validation units, model-selection boundaries,
+and numerical claims. Corrections should be versioned transparently and should
+not overwrite the historical protocol or dated amendments.
+
+No university affiliation, ethics determination, funding source, or clinical
+endorsement is claimed by this repository. Anyone extending the work must meet
+their own institutional, legal, and data-governance obligations.

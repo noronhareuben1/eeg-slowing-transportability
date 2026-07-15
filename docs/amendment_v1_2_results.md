@@ -96,9 +96,9 @@ Lock a reduced panel before accessing a new cohort:
 5. report macro AUC, FTD AUC, calibration, class sensitivity/specificity, and
    decision-curve utility, with no model changes after test labels are opened.
 
-The concrete request to the PI is approval to proceed as a university-affiliated
-confirmatory study, including institutional data-governance/IRB determination
-and access to or collection of an independent paired AD/FTD/CN cohort.
+The next self-published protocol will lock this reduced panel before a new
+paired AD/FTD/CN cohort is opened. Any future collection or restricted-data
+access must obtain the determinations required by the responsible institution.
 
 ## Reproducible outputs
 

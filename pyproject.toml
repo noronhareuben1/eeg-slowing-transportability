@@ -3,13 +3,21 @@ requires = ["setuptools>=75", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "rostrocaudal-eeg-dementia"
-version = "0.1.0"
-description = "Spectral-surrogate and leakage-safe analysis of rostrocaudal EEG complexity in AD and FTD"
+name = "eeg-slowing-transportability"
+version = "0.2.0"
+description = "Transportability and paired photic-response analysis of compact EEG markers in AD, FTD, and controls"
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
 license = {text = "MIT"}
 authors = [{name = "Reuben Noronha"}]
+keywords = ["EEG", "Alzheimer disease", "frontotemporal dementia", "transportability", "photic stimulation"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
 dependencies = [
   "antropy>=0.1.9",
   "eeglabio>=0.1.0",
@@ -21,6 +29,7 @@ dependencies = [
   "pandas>=2.2",
   "pingouin>=0.5.5",
   "pyyaml>=6.0",
+  "requests>=2.32",
   "scikit-learn>=1.6",
   "scipy>=1.14",
   "seaborn>=0.13",
@@ -43,13 +52,28 @@ dev = [
 
 [project.scripts]
 rcd = "rcd.cli:app"
+eeg-download-padic = "transportability.download_padic:main"
+eeg-derive-locked = "transportability.derive_features:main"
+eeg-extract-padic = "transportability.extract_features:main"
+eeg-external-validate = "transportability.run_external_validation:main"
+eeg-amend-v1-1 = "transportability.run_amendment_analysis:main"
+eeg-photic-features = "transportability.photic_response_features:main"
+eeg-amend-v1-2 = "transportability.run_amendment_v1_2:main"
+
+[project.urls]
+Homepage = "https://github.com/noronhareuben1/eeg-slowing-transportability"
+Repository = "https://github.com/noronhareuben1/eeg-slowing-transportability"
+Issues = "https://github.com/noronhareuben1/eeg-slowing-transportability/issues"
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["src", "."]
+include = ["rcd*", "transportability*"]
+exclude = ["project*"]
+namespaces = false
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q"
+addopts = "-q --basetemp=.pytest_tmp"
 
 [tool.ruff]
 line-length = 100

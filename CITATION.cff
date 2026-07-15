@@ -1,19 +1,29 @@
 cff-version: 1.2.0
-title: "Testing rostrocaudal EEG complexity as a state-invariant marker of dementia subtype"
-message: "If you use this software or derived results, please cite the associated manuscript and repository release."
+title: "EEG slowing transportability and paired photic-response discrimination in AD, FTD, and controls"
+message: "Please cite this software release and every original public dataset used."
 type: software
 authors:
   - family-names: Noronha
     given-names: Reuben
-    email: noronhareuben1@gmail.com
-repository-code: "https://github.com/noronhareuben1/rostrocaudal-eeg-dementia"
+version: 0.2.0
+date-released: 2026-07-15
+repository-code: "https://github.com/noronhareuben1/eeg-slowing-transportability"
+url: "https://github.com/noronhareuben1/eeg-slowing-transportability"
 license: MIT
-date-released: 2026-07-13
 keywords:
   - EEG
   - Alzheimer disease
   - frontotemporal dementia
-  - fractal dimension
-  - EEGNet
-  - reproducibility
-
+  - transportability
+  - photic stimulation
+  - spectral parameterization
+references:
+  - type: dataset
+    title: "OpenNeuro ds004504, version 1.0.9"
+    doi: "10.18112/openneuro.ds004504.v1.0.9"
+  - type: dataset
+    title: "OpenNeuro ds006036, version 1.0.6"
+    doi: "10.18112/openneuro.ds006036.v1.0.6"
+  - type: dataset
+    title: "EEG p-adic quantum potential accurately identifies depression, schizophrenia and cognitive decline"
+    doi: "10.5061/dryad.8gtht76pw"

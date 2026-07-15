@@ -14,15 +14,24 @@ data/
 venv/
 __pycache__/
 *.py[cod]
+*.egg-info/
 .pytest_cache/
+.pytest_tmp/
+.mplconfig/
 .mypy_cache/
 .ruff_cache/
 .coverage
 htmlcov/
+build/
+dist/
 
 # Render and QA intermediates
 manuscript/rendered/
 manuscript/qa/
+manuscript/PI_Brief_Ed_Freedman_AD_FTD_EEG_Study.docx
+
+# Retained local duplicate from the original export
+project/
 
 # Large local checkpoint/archive artifacts
 rostrocaudal-dementia-project.zip

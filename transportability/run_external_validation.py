@@ -62,7 +62,15 @@ def _decode_sex(values: pd.Series) -> pd.Series:
 
 def _age_sex_matrix(frame: pd.DataFrame) -> tuple[np.ndarray, np.ndarray] | None:
     age_col = "age" if "age" in frame.columns else "Age" if "Age" in frame.columns else None
-    sex_col = "sex" if "sex" in frame.columns else "gender" if "gender" in frame.columns else "Gender" if "Gender" in frame.columns else None
+    sex_col = (
+        "sex"
+        if "sex" in frame.columns
+        else "gender"
+        if "gender" in frame.columns
+        else "Gender"
+        if "Gender" in frame.columns
+        else None
+    )
     if age_col is None or sex_col is None:
         return None
     age = pd.to_numeric(frame[age_col], errors="coerce")
@@ -101,8 +109,12 @@ def evaluate(derivation: pd.DataFrame, external: pd.DataFrame) -> dict[str, obje
         "external_auc_ci95": _bootstrap(y_test, probabilities, roc_auc_score),
         "external_average_precision": float(average_precision_score(y_test, probabilities)),
         "external_brier": float(brier_score_loss(y_test, probabilities)),
-        "external_sensitivity_at_derivation_threshold": float((predictions & (y_test == 1)).sum() / max((y_test == 1).sum(), 1)),
-        "external_specificity_at_derivation_threshold": float((~predictions & (y_test == 0)).sum() / max((y_test == 0).sum(), 1)),
+        "external_sensitivity_at_derivation_threshold": float(
+            (predictions & (y_test == 1)).sum() / max((y_test == 1).sum(), 1)
+        ),
+        "external_specificity_at_derivation_threshold": float(
+            (~predictions & (y_test == 0)).sum() / max((y_test == 0).sum(), 1)
+        ),
         "derivation_selected_threshold": threshold,
     }
     result.update(_calibration(y_test, probabilities))

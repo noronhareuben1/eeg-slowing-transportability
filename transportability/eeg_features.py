@@ -20,8 +20,23 @@ POSTERIOR = np.array([12, 13, 14, 15, 16, 17, 18])
 
 def _largest_numeric_variable(path: pathlib.Path) -> str:
     entries = whosmat(path)
-    candidates = [(int(np.prod(shape)), name) for name, shape, kind in entries
-                  if kind in {"double", "single", "int8", "uint8", "int16", "uint16", "int32", "uint32", "int64", "uint64"}]
+    numeric_kinds = {
+        "double",
+        "single",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+    }
+    candidates = [
+        (int(np.prod(shape)), name)
+        for name, shape, kind in entries
+        if kind in numeric_kinds
+    ]
     if not candidates:
         raise ValueError(f"no numeric MATLAB variable found in {path}")
     return max(candidates)[1]
@@ -178,10 +193,13 @@ def _subject_features(recording: np.ndarray, sfreq: float) -> dict[str, float]:
     slope = float(np.polyfit(np.log10(freqs[fit]), np.log10(global_power[fit]), 1)[0])
     return {
         "posterior_delta_alpha_ratio": delta_post / max(alpha_post, np.finfo(float).tiny),
-        "posterior_alpha_relative": alpha_post / max(_band_power(freqs, posterior_power, 1.0, 30.0), np.finfo(float).tiny),
+        "posterior_alpha_relative": alpha_post
+        / max(_band_power(freqs, posterior_power, 1.0, 30.0), np.finfo(float).tiny),
         "global_aperiodic_exponent": -slope,
-        "global_delta_relative": delta_global / max(_band_power(freqs, global_power, 1.0, 30.0), np.finfo(float).tiny),
-        "global_alpha_relative": alpha_global / max(_band_power(freqs, global_power, 1.0, 30.0), np.finfo(float).tiny),
+        "global_delta_relative": delta_global
+        / max(_band_power(freqs, global_power, 1.0, 30.0), np.finfo(float).tiny),
+        "global_alpha_relative": alpha_global
+        / max(_band_power(freqs, global_power, 1.0, 30.0), np.finfo(float).tiny),
     }
 
 
